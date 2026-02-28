@@ -1774,9 +1774,11 @@ function Editor:Paint()
 		if self.DrawingConnectionAll then
 			drawingConnectionFrom = {}
 			local ports
+			local amountOfInputs = getInputAmountForNode(node)
 			if self.DrawingFromInput then ports = gate.inputs
 			elseif self.DrawingFromOutput then ports = gate.outputs or { "Out" } end
 			for portNum, portName in pairs(ports) do
+				if self.DrawingFromInput and portNum > amountOfInputs then break end
 				drawingConnectionFrom[portNum] = portNum
 			end
 		end
@@ -2489,9 +2491,11 @@ function Editor:OnDrawConnectionFinished(x, y)
 	if self.DrawingConnectionAll then
 		drawingConnectionFrom = {}
 		local ports
+		local amountOfInputs = getInputAmountForNode(fromNode)
 		if self.DrawingFromInput then ports = fromGate.inputs
 		elseif self.DrawingFromOutput then ports = fromGate.outputs or { "Out" } end
 		for portNum, _ in pairs(ports) do
+			if self.DrawingFromInput and portNum > amountOfInputs then break end
 			drawingConnectionFrom[portNum] = portNum
 		end
 	end
