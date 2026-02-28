@@ -913,12 +913,14 @@ function Editor:GetNodeInputAt(x, y)
 
 		if not gate then continue end
 
+		local amountOfInputs = getInputAmountForNode(node)
+
 		if gx < node.x - self.GateSize / 2 - self.IOSize then continue end
 		if gx > node.x + self.GateSize / 2 + self.IOSize then continue end
 		if gy < node.y - self.GateSize / 2 then continue end
-		if gy > node.y - self.GateSize / 2 + self.GateSize * #gate.inputs then continue end
+		if gy > node.y - self.GateSize / 2 + self.GateSize * amountOfInputs then continue end
 
-		for inputNum = 1, getInputAmountForNode(node) do
+		for inputNum = 1, amountOfInputs do
 			local ix, iy = self:NodeInputPos(node, inputNum)
 
 			if gx < ix - self.IOSize / 2 then continue end
