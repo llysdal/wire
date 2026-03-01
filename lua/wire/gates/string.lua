@@ -146,22 +146,16 @@ GateActions["string_concat"] = {
 	name = "Concatenate",
 	description = "Combines multiple strings together into one string.",
 	inputs = { "A" , "B" , "C" , "D" , "E" , "F" , "G" , "H" },
+	compact_inputs = 2,
 	inputtypes = { "STRING" , "STRING" , "STRING" , "STRING" , "STRING" , "STRING" , "STRING" , "STRING" },
 	outputtypes = { "STRING" },
-	output = function(gate, A, B, C, D, E, F, G, H)
-		if  (A and #A or 0)
-		  + (B and #B or 0)
-		  + (C and #C or 0)
-		  + (D and #D or 0)
-		  + (E and #E or 0)
-		  + (F and #F or 0)
-		  + (G and #G or 0)
-		  + (H and #H or 0)  > MAX_LEN
-		then
-			return false
+	output = function(gate, ...)
+		local result = ""
+		for k,v in ipairs({...}) do
+			if (v) then result = result..v end
 		end
-		local T = {A,B,C,D,E,F,G,H}
-		return table.concat(T)
+		if #result > MAX_LEN then return false end
+		return result
 	end,
 	label = function(Out)
 		return string.format ("concat = %q", Out)
