@@ -150,12 +150,12 @@ GateActions["string_concat"] = {
 	inputtypes = { "STRING" , "STRING" , "STRING" , "STRING" , "STRING" , "STRING" , "STRING" , "STRING" },
 	outputtypes = { "STRING" },
 	output = function(gate, ...)
-		local result = ""
-		for k,v in ipairs({...}) do
-			if (v) then result = result..v end
+		local len = 0
+		for _, v in ipairs({...}) do
+			if (v) then len = len + #v end
 		end
-		if #result > MAX_LEN then return false end
-		return result
+		if len > MAX_LEN then return false end
+		return table.concat({...})
 	end,
 	label = function(Out)
 		return string.format ("concat = %q", Out)
