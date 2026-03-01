@@ -343,10 +343,10 @@ GateActions["string_to_memory"] = {
     if (Address == 0) then 	   --Clk
       if (gate.stringChanged) then return 1 else return 0 end
     elseif (Address == 1) then --String length
-      return #(gate.currentString)
+      return #gate.currentString
     else --Return string bytes
       local index = Address - 1
-      if (index > #(gate.currentString)) then -- Check whether requested address is outside the string
+      if (index > #gate.currentString) then -- Check whether requested address is outside the string
         return 0
       else
         return string.byte(gate.currentString, index)
